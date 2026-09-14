@@ -30,7 +30,7 @@ const AmenityBadge = ({ amenity, size = 'sm' }) => {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-[var(--radius-badge)] font-medium ${config.color} ${
+      className={`inline-flex items-center gap-1.5 rounded-full font-medium ${config.color} ${
         isSmall ? 'px-2.5 py-1 text-xs' : 'px-3 py-1.5 text-sm'
       }`}
     >

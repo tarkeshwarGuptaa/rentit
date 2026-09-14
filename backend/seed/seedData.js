@@ -250,36 +250,36 @@ const createRooms = (landlordIds) => [
 const seedDatabase = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('📦 Connected to MongoDB');
+    console.log('Connected to MongoDB');
 
     // Clear existing data
     await User.deleteMany({});
     await Room.deleteMany({});
-    console.log('🗑️  Cleared existing data');
+    console.log('Cleared existing data');
 
     // Create landlords
     const createdLandlords = await User.insertMany(landlords);
-    console.log(`👤 Created ${createdLandlords.length} landlords`);
+    console.log(`Created ${createdLandlords.length} landlords`);
 
     // Create student
     const createdStudents = await User.insertMany(students);
-    console.log(`🎓 Created ${createdStudents.length} test students`);
+    console.log(`Created ${createdStudents.length} test students`);
 
     // Create rooms
     const landlordIds = createdLandlords.map((l) => l._id);
     const rooms = createRooms(landlordIds);
     const createdRooms = await Room.insertMany(rooms);
-    console.log(`🏠 Created ${createdRooms.length} room listings`);
+    console.log(`Created ${createdRooms.length} room listings`);
 
-    console.log('\n✅ Database seeded successfully!');
-    console.log('\n📋 Test Credentials:');
+    console.log('\nDatabase seeded successfully!');
+    console.log('\nTest Credentials:');
     console.log('   Landlord: rajesh@example.com / password123');
     console.log('   Student:  arjun@example.com / password123');
 
     await mongoose.connection.close();
     process.exit(0);
   } catch (error) {
-    console.error('❌ Seed failed:', error.message);
+    console.log('Seed failed:', error.message);
     await mongoose.connection.close();
     process.exit(1);
   }

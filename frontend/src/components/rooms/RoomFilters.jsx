@@ -34,41 +34,41 @@ const RoomFilters = ({ filters, onFilterChange }) => {
       {/* Search Bar */}
       <form onSubmit={handleSearchSubmit} className="flex gap-2">
         <div className="relative flex-1">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-700/40" />
+          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-700/40" />
           <input
             type="text"
             placeholder="Search rooms, areas..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-surface-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-zinc-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
           />
         </div>
         <button
           type="button"
           onClick={() => setShowFilters(!showFilters)}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-[var(--radius-input)] text-sm font-medium border transition-colors cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium border transition-colors cursor-pointer ${
             showFilters
-              ? 'bg-primary-50 border-primary-200 text-primary-700'
-              : 'bg-white border-surface-200 text-surface-700 hover:bg-surface-50'
+              ? 'bg-indigo-50 border-indigo-200 text-indigo-700'
+              : 'bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50'
           }`}
         >
           <FiSliders className="w-4 h-4" />
           Filters
           {hasActiveFilters && (
-            <span className="w-2 h-2 bg-primary-500 rounded-full" />
+            <span className="w-2 h-2 bg-indigo-500 rounded-full" />
           )}
         </button>
       </form>
 
       {/* Filter Panel */}
       {showFilters && (
-        <div className="bg-white border border-surface-200 rounded-[var(--radius-card)] p-5 animate-fade-in space-y-5">
+        <div className="bg-white border border-zinc-200 rounded-2xl p-5 animate-fade-in space-y-5">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-surface-900 text-sm">Filters</h3>
+            <h3 className="font-semibold text-zinc-900 text-sm">Filters</h3>
             {hasActiveFilters && (
               <button
                 onClick={handleClearFilters}
-                className="flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 font-medium cursor-pointer"
+                className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-700 font-medium cursor-pointer"
               >
                 <FiX className="w-3 h-3" />
                 Clear all
@@ -79,11 +79,11 @@ const RoomFilters = ({ filters, onFilterChange }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Area */}
             <div>
-              <label className="block text-xs font-medium text-surface-700 mb-1.5">Area</label>
+              <label className="block text-xs font-medium text-zinc-700 mb-1.5">Area</label>
               <select
                 value={filters.area || ''}
                 onChange={(e) => onFilterChange({ area: e.target.value })}
-                className="w-full px-3 py-2 bg-surface-50 border border-surface-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 cursor-pointer"
+                className="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
               >
                 <option value="">All Areas</option>
                 {AREAS.map((a) => (
@@ -94,11 +94,11 @@ const RoomFilters = ({ filters, onFilterChange }) => {
 
             {/* Room Type */}
             <div>
-              <label className="block text-xs font-medium text-surface-700 mb-1.5">Room Type</label>
+              <label className="block text-xs font-medium text-zinc-700 mb-1.5">Room Type</label>
               <select
                 value={filters.roomType || ''}
                 onChange={(e) => onFilterChange({ roomType: e.target.value })}
-                className="w-full px-3 py-2 bg-surface-50 border border-surface-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 cursor-pointer"
+                className="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
               >
                 <option value="">All Types</option>
                 {ROOM_TYPES.map((t) => (
@@ -111,32 +111,32 @@ const RoomFilters = ({ filters, onFilterChange }) => {
 
             {/* Min Price */}
             <div>
-              <label className="block text-xs font-medium text-surface-700 mb-1.5">Min Price (₹)</label>
+              <label className="block text-xs font-medium text-zinc-700 mb-1.5">Min Price (₹)</label>
               <input
                 type="number"
                 placeholder="₹0"
                 value={filters.minPrice || ''}
                 onChange={(e) => onFilterChange({ minPrice: e.target.value })}
-                className="w-full px-3 py-2 bg-surface-50 border border-surface-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30"
+                className="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
 
             {/* Max Price */}
             <div>
-              <label className="block text-xs font-medium text-surface-700 mb-1.5">Max Price (₹)</label>
+              <label className="block text-xs font-medium text-zinc-700 mb-1.5">Max Price (₹)</label>
               <input
                 type="number"
                 placeholder="₹50,000"
                 value={filters.maxPrice || ''}
                 onChange={(e) => onFilterChange({ maxPrice: e.target.value })}
-                className="w-full px-3 py-2 bg-surface-50 border border-surface-200 rounded-[var(--radius-input)] text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30"
+                className="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
           </div>
 
           {/* Amenities */}
           <div>
-            <label className="block text-xs font-medium text-surface-700 mb-2">Amenities</label>
+            <label className="block text-xs font-medium text-zinc-700 mb-2">Amenities</label>
             <div className="flex flex-wrap gap-2">
               {AMENITIES.map((amenity) => {
                 const selected = filters.amenities?.split(',').includes(amenity);
@@ -150,10 +150,10 @@ const RoomFilters = ({ filters, onFilterChange }) => {
                         : [...current, amenity];
                       onFilterChange({ amenities: updated.join(',') });
                     }}
-                    className={`px-3 py-1.5 rounded-[var(--radius-badge)] text-xs font-medium transition-colors cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
                       selected
-                        ? 'bg-primary-100 text-primary-700 ring-1 ring-primary-300'
-                        : 'bg-surface-100 text-surface-700 hover:bg-surface-200'
+                        ? 'bg-indigo-100 text-indigo-700 ring-1 ring-indigo-300'
+                        : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'
                     }`}
                   >
                     {amenity}

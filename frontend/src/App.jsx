@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadStoredAuth, selectIsAuthenticated, selectAuthLoading, selectUser } from './store/slices/authSlice';
 import ErrorBoundary from './components/ui/ErrorBoundary';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -16,45 +18,49 @@ import DashboardPage from './pages/DashboardPage';
 import AddRoomPage from './pages/AddRoomPage';
 import ProfilePage from './pages/ProfilePage';
 
-// Protected Route wrapper
+// ─── Route Guards ──────────────────────────────────────────────────
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { isAuthenticated, user, loading } = useAuth();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const loading = useSelector(selectAuthLoading);
+  const user = useSelector(selectUser);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600" />
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600" />
       </div>
     );
   }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (allowedRoles && !allowedRoles.includes(user?.role)) {
-    return <Navigate to="/" replace />;
-  }
-
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (allowedRoles && !allowedRoles.includes(user?.role)) return <Navigate to="/" replace />;
   return children;
 };
 
-// Guest Route (redirects if logged in)
 const GuestRoute = ({ children }) => {
-  const { isAuthenticated, loading, user } = useAuth();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const loading = useSelector(selectAuthLoading);
+  const user = useSelector(selectUser);
 
   if (loading) return null;
-
   if (isAuthenticated) {
     return <Navigate to={user?.role === 'landlord' ? '/dashboard' : '/listings'} replace />;
   }
-
   return children;
 };
 
+// ─── App Content ───────────────────────────────────────────────────
+
 const AppContent = () => {
+  const dispatch = useDispatch();
+
+  // Load auth from localStorage on first mount
+  useEffect(() => {
+    dispatch(loadStoredAuth());
+  }, [dispatch]);
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-zinc-50 text-zinc-900 font-sans">
       <Navbar />
       <main className="flex-1">
         <Routes>
@@ -62,65 +68,32 @@ const AppContent = () => {
           <Route path="/listings" element={<ListingsPage />} />
           <Route path="/rooms/:id" element={<RoomDetailPage />} />
 
-          <Route
-            path="/login"
-            element={
-              <GuestRoute>
-                <LoginPage />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <GuestRoute>
-                <RegisterPage />
-              </GuestRoute>
-            }
-          />
+          <Route path="/login" element={<GuestRoute><LoginPage /></GuestRoute>} />
+          <Route path="/register" element={<GuestRoute><RegisterPage /></GuestRoute>} />
 
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute allowedRoles={['landlord']}>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/add-room"
-            element={
-              <ProtectedRoute allowedRoles={['landlord']}>
-                <AddRoomPage />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/dashboard" element={
+            <ProtectedRoute allowedRoles={['landlord']}><DashboardPage /></ProtectedRoute>
+          } />
+          <Route path="/add-room" element={
+            <ProtectedRoute allowedRoles={['landlord']}><AddRoomPage /></ProtectedRoute>
+          } />
+          <Route path="/profile" element={
+            <ProtectedRoute><ProfilePage /></ProtectedRoute>
+          } />
 
           {/* 404 */}
-          <Route
-            path="*"
-            element={
-              <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
-                <h1 className="text-6xl font-bold text-surface-200 mb-4">404</h1>
-                <p className="text-surface-700/60 mb-6">Page not found</p>
-                <a
-                  href="/"
-                  className="px-6 py-2.5 bg-primary-600 text-white rounded-[var(--radius-button)] font-medium hover:bg-primary-700 transition-colors"
-                >
-                  Go Home
-                </a>
-              </div>
-            }
-          />
+          <Route path="*" element={
+            <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+              <h1 className="text-8xl font-extrabold text-zinc-200 mb-4 font-display">404</h1>
+              <p className="text-zinc-400 mb-8 text-lg">This page doesn't exist.</p>
+              <a
+                href="/"
+                className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+              >
+                Go Home
+              </a>
+            </div>
+          } />
         </Routes>
       </main>
       <Footer />
@@ -133,28 +106,23 @@ function App() {
     <HelmetProvider>
       <ErrorBoundary>
         <Router>
-          <AuthProvider>
-            <AppContent />
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 3000,
-                style: {
-                  background: '#1e293b',
-                  color: '#f8fafc',
-                  fontSize: '14px',
-                  borderRadius: '10px',
-                  padding: '12px 16px',
-                },
-                success: {
-                  iconTheme: { primary: '#22c55e', secondary: '#f8fafc' },
-                },
-                error: {
-                  iconTheme: { primary: '#ef4444', secondary: '#f8fafc' },
-                },
-              }}
-            />
-          </AuthProvider>
+          <AppContent />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3500,
+              style: {
+                background: '#18181b',
+                color: '#fafafa',
+                fontSize: '14px',
+                borderRadius: '10px',
+                padding: '12px 16px',
+                border: '1px solid rgba(255,255,255,0.08)',
+              },
+              success: { iconTheme: { primary: '#10b981', secondary: '#fafafa' } },
+              error: { iconTheme: { primary: '#ef4444', secondary: '#fafafa' } },
+            }}
+          />
         </Router>
       </ErrorBoundary>
     </HelmetProvider>

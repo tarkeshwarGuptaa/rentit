@@ -49,7 +49,6 @@ export const getRooms = asyncHandler(async (req, res) => {
     query.$or = [
       { title: { $regex: search, $options: 'i' } },
       { description: { $regex: search, $options: 'i' } },
-      { area: { $regex: search, $options: 'i' } },
     ];
   }
 
@@ -169,8 +168,7 @@ export const updateRoom = asyncHandler(async (req, res) => {
   if (updateData.amenities) updateData.amenities = JSON.parse(updateData.amenities);
   if (updateData.location) updateData.location = JSON.parse(updateData.location);
 
-  if (photoUrls.length > 0) {
-    // Merge with existing photos or replace
+  if (req.body.existingPhotos || photoUrls.length > 0) {
     const existingPhotos = req.body.existingPhotos ? JSON.parse(req.body.existingPhotos) : room.photos;
     updateData.photos = [...existingPhotos, ...photoUrls];
   }

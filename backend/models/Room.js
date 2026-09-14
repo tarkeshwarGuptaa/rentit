@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const roomSchema = new mongoose.Schema(
+const listingSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -19,8 +19,6 @@ const roomSchema = new mongoose.Schema(
     rent: {
       type: Number,
       required: [true, 'Rent is required'],
-      min: 500,
-      max: 100000,
     },
     address: {
       type: String,
@@ -69,11 +67,7 @@ const roomSchema = new mongoose.Schema(
   }
 );
 
-// Index for efficient queries want to delete
-// roomSchema.index({ area: 1, rent: 1 });
-// roomSchema.index({ roomType: 1 });
-// roomSchema.index({ isAvailable: 1 });
-// roomSchema.index({ landlord: 1 });
 
-const Room = mongoose.model('Room', roomSchema);
+
+const Room = mongoose.model('listing', listingSchema);
 export default Room;

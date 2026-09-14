@@ -58,7 +58,7 @@ const formatRent = (amount) =>
 
 const RoomMap = ({ rooms = [], highlightedRoom = null, onMarkerClick, className = '' }) => {
   return (
-    <div className={`rounded-[var(--radius-card)] overflow-hidden ${className}`}>
+    <div className={`rounded-2xl overflow-hidden ${className}`}>
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={DEFAULT_ZOOM}
@@ -94,12 +94,12 @@ const RoomMap = ({ rooms = [], highlightedRoom = null, onMarkerClick, className 
                   <h4 className="font-semibold text-sm text-gray-900 mb-1">
                     {room.title}
                   </h4>
-                  <p className="text-primary-600 font-bold text-sm mb-2">
+                  <p className="text-indigo-600 font-bold text-sm mb-2">
                     {formatRent(room.rent)}/month
                   </p>
                   <Link
                     to={`/rooms/${room._id}`}
-                    className="inline-block text-xs text-primary-600 font-medium hover:underline"
+                    className="inline-block text-xs text-indigo-600 font-medium hover:underline"
                   >
                     View Details →
                   </Link>

@@ -176,16 +176,16 @@ const AddRoomPage = () => {
   if (fetchingRoom) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600" />
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600" />
       </div>
     );
   }
 
   const inputClass = (field) =>
-    `w-full px-4 py-2.5 border rounded-[var(--radius-input)] text-sm focus:outline-none focus:ring-2 transition-all ${
+    `w-full px-4 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 transition-all ${
       errors[field]
         ? 'border-red-300 focus:ring-red-500/30'
-        : 'border-surface-200 focus:ring-primary-500/30 focus:border-primary-500'
+        : 'border-zinc-200 focus:ring-indigo-500/30 focus:border-indigo-500'
     }`;
 
   return (
@@ -194,26 +194,26 @@ const AddRoomPage = () => {
         <title>{editId ? 'Edit Room' : 'List a Room'} — RoomNear</title>
       </Helmet>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+      <div className="px-4 sm:px-6 lg:px-10 py-8">
         <button
           onClick={() => navigate('/dashboard')}
-          className="inline-flex items-center gap-2 text-surface-700/60 hover:text-surface-900 text-sm font-medium mb-5 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-zinc-700/60 hover:text-zinc-900 text-sm font-medium mb-5 transition-colors cursor-pointer"
         >
           <FiArrowLeft className="w-4 h-4" />
           Back to dashboard
         </button>
 
-        <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 mb-8 font-[var(--font-display)]">
+        <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 mb-8 font-display">
           {editId ? 'Edit Room Listing' : 'List a New Room'}
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="bg-white border border-surface-200 rounded-[var(--radius-card)] p-6 space-y-5">
-            <h2 className="text-lg font-semibold text-surface-900">Room Details</h2>
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 space-y-5">
+            <h2 className="text-lg font-semibold text-zinc-900">Room Details</h2>
 
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-surface-700 mb-1.5">Title</label>
+              <label className="block text-sm font-medium text-zinc-700 mb-1.5">Title</label>
               <input
                 type="text"
                 value={formData.title}
@@ -226,7 +226,7 @@ const AddRoomPage = () => {
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-surface-700 mb-1.5">Description</label>
+              <label className="block text-sm font-medium text-zinc-700 mb-1.5">Description</label>
               <textarea
                 rows={4}
                 value={formData.description}
@@ -240,7 +240,7 @@ const AddRoomPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Rent */}
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Rent (₹/month)</label>
+                <label className="block text-sm font-medium text-zinc-700 mb-1.5">Rent (₹/month)</label>
                 <input
                   type="number"
                   value={formData.rent}
@@ -253,7 +253,7 @@ const AddRoomPage = () => {
 
               {/* Room Type */}
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Room Type</label>
+                <label className="block text-sm font-medium text-zinc-700 mb-1.5">Room Type</label>
                 <select
                   value={formData.roomType}
                   onChange={(e) => setFormData({ ...formData, roomType: e.target.value })}
@@ -269,7 +269,7 @@ const AddRoomPage = () => {
 
               {/* Area */}
               <div>
-                <label className="block text-sm font-medium text-surface-700 mb-1.5">Area / Locality</label>
+                <label className="block text-sm font-medium text-zinc-700 mb-1.5">Area / Locality</label>
                 <input
                   type="text"
                   value={formData.area}
@@ -283,7 +283,7 @@ const AddRoomPage = () => {
 
             {/* Address */}
             <div>
-              <label className="block text-sm font-medium text-surface-700 mb-1.5">Full Address</label>
+              <label className="block text-sm font-medium text-zinc-700 mb-1.5">Full Address</label>
               <input
                 type="text"
                 value={formData.address}
@@ -296,18 +296,18 @@ const AddRoomPage = () => {
           </div>
 
           {/* Amenities */}
-          <div className="bg-white border border-surface-200 rounded-[var(--radius-card)] p-6">
-            <h2 className="text-lg font-semibold text-surface-900 mb-4">Amenities</h2>
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6">
+            <h2 className="text-lg font-semibold text-zinc-900 mb-4">Amenities</h2>
             <div className="flex flex-wrap gap-2.5">
               {AMENITIES.map((amenity) => (
                 <button
                   key={amenity}
                   type="button"
                   onClick={() => handleAmenityToggle(amenity)}
-                  className={`px-4 py-2 rounded-[var(--radius-button)] text-sm font-medium border-2 transition-all cursor-pointer ${
+                  className={`px-4 py-2 rounded-xl text-sm font-medium border-2 transition-all cursor-pointer ${
                     formData.amenities.includes(amenity)
-                      ? 'border-primary-500 bg-primary-50 text-primary-700'
-                      : 'border-surface-200 bg-white text-surface-700 hover:border-surface-300'
+                      ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                      : 'border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300'
                   }`}
                 >
                   {amenity}
@@ -317,14 +317,14 @@ const AddRoomPage = () => {
           </div>
 
           {/* Photos */}
-          <div className="bg-white border border-surface-200 rounded-[var(--radius-card)] p-6">
-            <h2 className="text-lg font-semibold text-surface-900 mb-4">Photos</h2>
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6">
+            <h2 className="text-lg font-semibold text-zinc-900 mb-4">Photos</h2>
 
             {/* Existing photos */}
             {existingPhotos.length > 0 && (
               <div className="flex flex-wrap gap-3 mb-4">
                 {existingPhotos.map((url, i) => (
-                  <div key={i} className="relative w-28 h-20 rounded-[var(--radius-input)] overflow-hidden group">
+                  <div key={i} className="relative w-28 h-20 rounded-lg overflow-hidden group">
                     <img src={url} alt="" className="w-full h-full object-cover" />
                     <button
                       type="button"
@@ -342,7 +342,7 @@ const AddRoomPage = () => {
             {photos.length > 0 && (
               <div className="flex flex-wrap gap-3 mb-4">
                 {photos.map((file, i) => (
-                  <div key={i} className="relative w-28 h-20 rounded-[var(--radius-input)] overflow-hidden group">
+                  <div key={i} className="relative w-28 h-20 rounded-lg overflow-hidden group">
                     <img src={URL.createObjectURL(file)} alt="" className="w-full h-full object-cover" />
                     <button
                       type="button"
@@ -357,7 +357,7 @@ const AddRoomPage = () => {
             )}
 
             {/* Upload button */}
-            <label className="flex items-center justify-center gap-2 px-6 py-8 border-2 border-dashed border-surface-300 rounded-[var(--radius-card)] text-surface-700/50 hover:border-primary-400 hover:text-primary-600 transition-colors cursor-pointer">
+            <label className="flex items-center justify-center gap-2 px-6 py-8 border-2 border-dashed border-zinc-300 rounded-2xl text-zinc-700/50 hover:border-indigo-400 hover:text-indigo-600 transition-colors cursor-pointer">
               <FiUpload className="w-5 h-5" />
               <span className="text-sm font-medium">
                 Click to upload photos (max 6, 5MB each)
@@ -373,9 +373,9 @@ const AddRoomPage = () => {
           </div>
 
           {/* Location Map Picker */}
-          <div className="bg-white border border-surface-200 rounded-[var(--radius-card)] p-6">
-            <h2 className="text-lg font-semibold text-surface-900 mb-2">Room Location</h2>
-            <p className="text-sm text-surface-700/60 mb-4 flex items-center gap-1.5">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6">
+            <h2 className="text-lg font-semibold text-zinc-900 mb-2">Room Location</h2>
+            <p className="text-sm text-zinc-700/60 mb-4 flex items-center gap-1.5">
               <FiMapPin className="w-4 h-4" />
               Click on the map to set your room's exact location
             </p>
@@ -387,7 +387,7 @@ const AddRoomPage = () => {
               </div>
             )}
 
-            <div className="h-72 rounded-[var(--radius-card)] overflow-hidden">
+            <div className="h-72 rounded-2xl overflow-hidden">
               <MapContainer
                 center={formData.location ? [formData.location.lat, formData.location.lng] : DEFAULT_CENTER}
                 zoom={14}
@@ -405,7 +405,7 @@ const AddRoomPage = () => {
             </div>
 
             {formData.location && (
-              <p className="text-xs text-surface-700/50 mt-2">
+              <p className="text-xs text-zinc-700/50 mt-2">
                 📍 {formData.location.lat.toFixed(6)}, {formData.location.lng.toFixed(6)}
               </p>
             )}
@@ -415,7 +415,7 @@ const AddRoomPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-primary-600 text-white rounded-[var(--radius-button)] font-semibold hover:bg-primary-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:shadow-lg hover:shadow-primary-600/25"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:shadow-lg hover:shadow-indigo-600/25"
           >
             <FiSave className="w-5 h-5" />
             {loading ? 'Saving...' : editId ? 'Update Listing' : 'Publish Listing'}
