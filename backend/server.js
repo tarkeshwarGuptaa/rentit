@@ -1,6 +1,6 @@
+import 'dotenv/config'; // ← side-effect import: runs dotenv.config() BEFORE any other module loads
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import errorHandler from './middleware/errorHandler.js';
 import ApiError from './utils/ApiError.js';
@@ -9,7 +9,6 @@ import roomRoutes from './routes/roomRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 
 
-dotenv.config();
 connectDB();
 const app = express();
 
