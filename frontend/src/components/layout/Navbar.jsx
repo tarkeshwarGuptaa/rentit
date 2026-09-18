@@ -9,6 +9,7 @@ import {
 import { MdOutlineExplore } from 'react-icons/md';
 
 const Navbar = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,33 +29,33 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   const linkCls = (path) =>
-    `flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${isActive(path)
-      ? 'bg-indigo-50 text-indigo-700 font-semibold'
-      : 'text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900'
+    `flex items-center gap-1.5  font-semibold transition-colors ${isActive(path)
+      ? ' text-indigo-700'
+      : 'text-slate-600 hover:text-slate-800'
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-zinc-200"
-      style={{ boxShadow: '0 1px 3px 0 rgba(0,0,0,0.06)' }}>
-      <div className="px-4 sm:px-6 lg:px-10">
-        <div className="flex items-center justify-between h-16">
+    <nav className="sticky top-0 z-50 bg-[#f1f1f1] border-b border-slate-200">
+      <div className="p-4">
+        <div className="flex items-center justify-between">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group shrink-0">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform"
-              style={{ background: 'linear-gradient(135deg, #6366f1, #4338ca)' }}>
-              <MdOutlineExplore size={20} className="text-white" />
+            <div className="group-hover:scale-105 transition-transform"
+              >
+              <MdOutlineExplore size={36} className="text-indigo-700" />
             </div>
-            <span className="text-xl font-bold font-display tracking-tight"
+            <span className="text-2xl pb-1 font-bold tracking-tight"
               style={{ background: 'linear-gradient(90deg,#4f46e5,#3730a3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               rentIt
             </span>
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-0.5">
+          <div className="hidden md:flex items-center gap-1">
+
             <Link to="/listings" className={linkCls('/listings')}>
-              <FiSearch className="w-3.5 h-3.5" /> Browse
+              <FiSearch size={18} className="stroke-[2.2]" /> Browse
             </Link>
             {isAuthenticated && isLandlord && (
               <>
@@ -79,17 +80,17 @@ const Navbar = () => {
                 </Link>
                 <button onClick={handleLogout}
                   className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium text-zinc-400 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer">
-                  <FiLogOut className="w-3.5 h-3.5" /> Logout
+                  <FiLogOut size={18} className="stroke-[2.2]" /> Logout
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <Link to="/login" className={linkCls('/login')}>
-                  <FiLogIn className="w-3.5 h-3.5" /> Login
+                  <FiLogIn size={18} className="stroke-[2.2]" /> Login
                 </Link>
                 <Link to="/register"
-                  className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors"
-                  style={{ boxShadow: '0 2px 8px rgba(79,70,229,0.3)' }}>
+                  className="flex items-center px-3 py-1 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-sm"
+                  >
                   Get Started
                 </Link>
               </div>
@@ -99,46 +100,46 @@ const Navbar = () => {
           {/* Mobile hamburger */}
           <button onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-zinc-100 transition-colors cursor-pointer">
-            {mobileOpen ? <FiX className="w-5 h-5 text-zinc-700" /> : <FiMenu className="w-5 h-5 text-zinc-700" />}
+            {mobileOpen ? <FiX  size={24} className="stroke-[2.5] text-slate-700" /> : <FiMenu  size={24} className="stroke-[2.5] text-slate-700" />}
           </button>
         </div>
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 border-t border-zinc-100 animate-fade-in">
-            <div className="flex flex-col gap-0.5 pt-3">
+          <div className="md:hidden mt-2  border-t border-slate-200">
+            <div className="flex flex-col gap-1 pt-2">
               <Link to="/listings" className={linkCls('/listings')} onClick={() => setMobileOpen(false)}>
-                <FiSearch className="w-4 h-4" /> Browse Rooms
+                <FiSearch size={18} className="stroke-[2.5]" /> Browse Rooms
               </Link>
               {isAuthenticated && isLandlord && (
                 <>
                   <Link to="/dashboard" className={linkCls('/dashboard')} onClick={() => setMobileOpen(false)}>
-                    <FiGrid className="w-4 h-4" /> Dashboard
+                    <FiGrid size={18} className="stroke-[2.5]" /> Dashboard
                   </Link>
                   <Link to="/add-room" className={linkCls('/add-room')} onClick={() => setMobileOpen(false)}>
-                    <FiPlusCircle className="w-4 h-4" /> List Room
+                    <FiPlusCircle size={18} className="stroke-[2.5]" /> List Room
                   </Link>
                 </>
               )}
-              <div className="h-px bg-zinc-100 my-2" />
+              <div className=" bg-[#f1f1f1] " />
               {isAuthenticated ? (
                 <>
                   <Link to="/profile" className={linkCls('/profile')} onClick={() => setMobileOpen(false)}>
-                    <FiUser className="w-4 h-4" /> Profile
+                    <FiUser size={18} className="stroke-[2.5]" /> Profile
                   </Link>
                   <button onClick={handleLogout}
-                    className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-colors cursor-pointer text-left">
-                    <FiLogOut className="w-4 h-4" /> Logout
+                    className="flex items-center gap-2 px-3 py-1 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-colors cursor-pointer text-left">
+                    <FiLogOut size={18} className="stroke-[2.5]" /> Logout
                   </button>
                 </>
               ) : (
                 <>
                   <Link to="/login" className={linkCls('/login')} onClick={() => setMobileOpen(false)}>
-                    <FiLogIn className="w-4 h-4" /> Login
+                    <FiLogIn size={18} className="stroke-[2.5]" /> Login
                   </Link>
                   <Link to="/register" onClick={() => setMobileOpen(false)}
-                    className="flex items-center justify-center mt-1 px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors">
-                    Get Started — Free
+                    className="flex items-center justify-center mt-1 px-4 py-2 bg-indigo-600 text-white rounded-2xl font-semibold hover:bg-indigo-700 transition-colors">
+                    Get Started
                   </Link>
                 </>
               )}

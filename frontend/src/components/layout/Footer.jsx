@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import { FiHeart, FiMail, FiGithub, FiTwitter } from 'react-icons/fi';
-import { MdOutlineExplore } from 'react-icons/md';
+import { FiHeart, FiMail } from 'react-icons/fi';
+import { FaInstagram } from "react-icons/fa6";
+import { FaWhatsapp } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
+
   return (
     <footer className="bg-zinc-950 text-zinc-400" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       <div className="px-4 sm:px-6 lg:px-10 py-10">
@@ -11,10 +14,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link to="/" className="inline-flex items-center gap-2.5 mb-5 group">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                <MdOutlineExplore size={20} className="text-white" />
-              </div>
-              <span className="text-xl font-bold text-white font-display">
+              <span className="text-2xl font-bold text-white font-display">
                 rentIt
               </span>
             </Link>
@@ -25,9 +25,9 @@ const Footer = () => {
             {/* Socials */}
             <div className="flex items-center gap-3 mt-6">
               {[
-                { icon: FiGithub, href: 'https://github.com', label: 'GitHub' },
-                { icon: FiTwitter, href: '#', label: 'Twitter' },
-                { icon: FiMail, href: 'mailto:support@rentit.in', label: 'Email' },
+                { icon: FaInstagram, href: 'https://github.com', label: 'Instagram' },
+                { icon: FaXTwitter, href: '#', label: 'Twitter' },
+                { icon: FaWhatsapp, href: '#', label: 'Whatsapp' },
               ].map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -35,10 +35,10 @@ const Footer = () => {
                   aria-label={label}
                   target={href.startsWith('http') ? '_blank' : undefined}
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg flex items-center justify-center text-zinc-400 hover:text-white transition-all"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+                  className=" flex items-center justify-center text-zinc-400 hover:text-white transition-all"
+                  
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon size={20} className="stroke-[2.5]" />
                 </a>
               ))}
             </div>
@@ -90,11 +90,11 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <p className="text-xs text-zinc-400" style={{ opacity: 0.4 }}>
+          <p className="text-xs text-slate-200" style={{ opacity: 0.4 }}>
             © {new Date().getFullYear()} rentIt. Made with{' '}
             <FiHeart className="inline w-3 h-3 text-amber-500" /> for students.
           </p>
-          <p className="text-xs text-zinc-400" style={{ opacity: 0.3 }}>No brokerage. Always free for students.</p>
+          <p className="text-xs text-slate-200" style={{ opacity: 0.3 }}>No brokerage. Always free for students.</p>
         </div>
       </div>
     </footer>

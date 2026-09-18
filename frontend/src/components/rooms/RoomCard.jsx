@@ -3,6 +3,7 @@ import { FiMapPin } from 'react-icons/fi';
 import AmenityBadge from '../ui/AmenityBadge';
 
 const RoomCard = ({ room, isHighlighted = false }) => {
+
   const formatRent = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -28,9 +29,9 @@ const RoomCard = ({ room, isHighlighted = false }) => {
       }`}
     >
       {/* Image */}
-      <div className="relative overflow-hidden aspect-[16/10]">
+      <div className="relative overflow-hidden aspect-15/10">
         <img
-          src={room.photos?.[0] || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800'}
+          src={room.photos?.[0]}
           alt={room.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
@@ -53,14 +54,14 @@ const RoomCard = ({ room, isHighlighted = false }) => {
             className="ml-auto px-2.5 py-1 text-white text-xs font-medium rounded-full"
             style={{ background: 'rgba(24,24,27,0.75)', backdropFilter: 'blur(4px)' }}
           >
-            {roomTypeLabels[room.roomType] || room.roomType}
+            {roomTypeLabels[room.roomType]}
           </span>
         </div>
 
         {/* Price at bottom of image */}
         <div className="absolute bottom-3 left-3">
           <div className="flex items-baseline gap-1">
-            <span className="text-xl font-extrabold text-white font-display">
+            <span className="text-xl font-bold text-white">
               {formatRent(room.rent)}
             </span>
             <span className="text-white/65 text-xs font-medium">/mo</span>
@@ -71,19 +72,19 @@ const RoomCard = ({ room, isHighlighted = false }) => {
       {/* Card Body */}
       <div className="p-4">
         {/* Title */}
-        <h3 className="font-semibold text-zinc-900 text-[0.925rem] mb-1.5 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+        <h3 className="font-bold text-slate-900  mb-1 line-clamp-1 group-hover:text-indigo-600 transition-colors">
           {room.title}
         </h3>
 
         {/* Location */}
-        <div className="flex items-center gap-1.5 text-zinc-400 text-xs mb-3">
-          <FiMapPin className="w-3 h-3 shrink-0 text-indigo-400" />
+        <div className="flex items-center gap-1.5 text-zinc-400 text-xs font-semibold mb-2">
+          <FiMapPin size={16} className="stroke-[2.5] shrink-0 text-indigo-400" />
           <span className="line-clamp-1">{room.area}</span>
         </div>
 
         {/* Amenity badges */}
         {room.amenities?.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 pt-3 border-t border-zinc-100">
+          <div className="flex flex-wrap gap-1.5 pt-2 border-t border-zinc-100">
             {room.amenities.slice(0, 3).map((amenity) => (
               <AmenityBadge key={amenity} amenity={amenity} size="sm" />
             ))}
